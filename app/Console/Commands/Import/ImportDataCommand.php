@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Import;
 
+use App\Helpers\ImportDataHelper;
 use Illuminate\Console\Command;
 
 class ImportDataCommand extends Command
@@ -24,8 +25,8 @@ class ImportDataCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(ImportDataHelper $importDataHelper)
     {
-        //
+        $importDataHelper($this->argument('name'));
     }
 }
