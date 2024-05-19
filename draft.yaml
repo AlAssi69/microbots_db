@@ -1,0 +1,121 @@
+models:
+  Member:
+    hash_id: string
+    join_date: date
+    first_name: string
+    father_name: string
+    last_name: string
+    sex: string
+    email: string unique
+    date_of_birth: string
+    # TODO: calculate age:
+    university_id: id foreign:universities.id
+    major_id: id foreign:majors.id
+    uni_year: string
+    phone_number: string
+    emergency_name: string nullable
+    emergency_kinship: string nullable
+    emergency_phone: string nullable
+    governorate_id: id foreign:governorates.id
+    region_name: string nullable
+    street_name: string nullable
+    category_id: id foreign:categories.id
+    level_id: id foreign:levels.id
+    technical_specialization_id: id foreign:member_technical_specializations.id
+    department_id: id foreign:departments.id
+    frozen: boolean
+    work_from_home: boolean
+    relationships:
+      hasMany: BankTransaction, Project
+      hasOne: Color
+
+  Badge:
+    name: string
+    description: text
+
+  BankTransaction:
+    amount: integer
+    datetime: datetime
+    reason: text
+    member_id: id foreign:members.id
+
+  # Color
+  # relationships:
+  #     hasMany: Project
+
+  Course:
+    hash_id: string
+    name: string
+    description: text
+    start_date: date
+    sessions: integer
+    hours: integer
+    certificate: boolean
+
+  Department:
+    name: string unique
+    description: text
+    relationships:
+      hasMany: Member
+
+  Part:
+    name: string unique
+    type: string
+
+  Project:
+    hash_id: string
+    name: string
+    description: string
+    start_date: date
+    color_id: id foreign:colors.id
+    supervisior_id: id foreign:members.id
+    level_id: id foreign:levels.id
+    budget: integer nullable
+    deadline: datetime nullable
+
+  Tournament:
+    name: string
+    date: date
+    url: string nullable
+    country: string
+
+  Warehouse:
+    name: string
+    type: string
+    count: integer
+
+  Governorate:
+    name: string
+    relationships:
+      hasMany: Member
+
+  Major:
+    name: string
+    relationships:
+      hasMany: Member
+
+  MemberCategory:
+    name: string
+    relationships:
+      hasMany: Member
+
+  MemberTechnicalSpecialization:
+    name: string
+    relationships:
+      hasMany: Member
+
+  Level:
+    name: string
+    relationships:
+      hasMany: Project, Member
+
+  Skill:
+    name: string
+
+  University:
+    name: string
+    relationships:
+      hasMany: Member
+
+controllers:
+  # ...
