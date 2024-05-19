@@ -18,12 +18,12 @@ return new class extends Migration
             $table->id();
 
             // TODO: Make sure about the non-binary relationship
-            $table->foreignIdFor(Member::class, "member_id")->constrained();
-            $table->foreignIdFor(Warehouse::class, "warehouse_id")->constrained();
-            $table->foreignIdFor(Project::class, "project_id")->constrained();
-            $table->date("date");
-            $table->text("reason");
-            $table->integer("count");
+            $table->foreignIdFor(Member::class, 'member_id')->constrained();
+            $table->foreignIdFor(Warehouse::class, 'warehouse_id')->constrained();
+            $table->foreignIdFor(Project::class, 'project_id')->constrained();
+            $table->date('date');
+            $table->text('reason');
+            $table->integer('count');
         });
     }
 

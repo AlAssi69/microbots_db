@@ -31,12 +31,10 @@ class Badge extends Model
 
     /**
      * The members that belong to the Badge
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'badge_member', 'badge_id', 'member_id')
-            ->withPivot(["date", "reason"]);
+            ->withPivot(['date', 'reason']);
     }
 }

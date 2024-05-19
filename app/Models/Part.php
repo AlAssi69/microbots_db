@@ -31,11 +31,9 @@ class Part extends Model
 
     /**
      * The projects that belong to the Part
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class, 'part_project', 'part_id', 'project_id')->withPivot(["count"]);
+        return $this->belongsToMany(Project::class, 'part_project', 'part_id', 'project_id')->withPivot(['count']);
     }
 }

@@ -33,7 +33,7 @@ return new class extends Migration
             $table->foreignId('governorate_id')->constrained();
             $table->string('region_name')->nullable();
             $table->string('street_name')->nullable();
-            $table->foreignId('category_id')->constrained("member_categories");
+            $table->foreignId('category_id')->constrained('member_categories');
             $table->foreignId('level_id')->constrained();
             $table->foreignId('technical_specialization_id')->constrained('member_technical_specializations');
             $table->foreignId('department_id')->constrained();

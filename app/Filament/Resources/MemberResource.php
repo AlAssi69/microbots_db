@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemberResource\Pages;
-use App\Filament\Resources\MemberResource\RelationManagers;
+use App\Filament\Resources\MemberResource\RelationManagers\BadgesRelationManager;
 use App\Models\Member;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,7 +11,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MemberResource extends Resource
 {
@@ -35,19 +34,21 @@ class MemberResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('sex')
                     ->required()
-                    ->options(["M" => "Male", "F" => "Female"]),
+                    ->options(['M' => 'Male', 'F' => 'Female']),
                 Forms\Components\TextInput::make('email')
                     ->email()
-                    ->unique()
+                    ->unique(ignoreRecord: true)
                     ->required(),
                 Forms\Components\DatePicker::make('date_of_birth')
                     ->required(),
                 Forms\Components\Select::make('university_id')
                     ->relationship('university', 'name')
-                    ->required(),
+                    ->required()
+                    ->preload(),
                 Forms\Components\Select::make('major_id')
                     ->relationship('major', 'name')
-                    ->required(),
+                    ->required()
+                    ->preload(),
                 Forms\Components\TextInput::make('uni_year')
                     ->required()
                     ->minValue(1)
@@ -62,21 +63,26 @@ class MemberResource extends Resource
                     ->tel(),
                 Forms\Components\Select::make('governorate_id')
                     ->relationship('governorate', 'name')
-                    ->required(),
+                    ->required()
+                    ->preload(),
                 Forms\Components\TextInput::make('region_name'),
                 Forms\Components\TextInput::make('street_name'),
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
-                    ->required(),
+                    ->required()
+                    ->preload(),
                 Forms\Components\Select::make('level_id')
                     ->relationship('level', 'name')
-                    ->required(),
+                    ->required()
+                    ->preload(),
                 Forms\Components\Select::make('technical_specialization_id')
                     ->relationship('technicalSpecialization', 'name')
-                    ->required(),
+                    ->required()
+                    ->preload(),
                 Forms\Components\Select::make('department_id')
                     ->relationship('department', 'name')
-                    ->required(),
+                    ->required()
+                    ->preload(),
                 Forms\Components\Toggle::make('frozen')
                     ->required(),
                 Forms\Components\Toggle::make('work_from_home')
@@ -100,10 +106,9 @@ class MemberResource extends Resource
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sex')
-                    ->color(fn ($state) => $state == "M" ? "blue" : "pink")
+                    ->color(fn ($state) => $state == 'M' ? 'blue' : 'pink')
                     ->badge()
-                    ->formatStateUsing(fn ($state) =>
-                    $state == "M" ? "Male" : "Female")
+                    ->formatStateUsing(fn ($state) => $state == 'M' ? 'Male' : 'Female')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
@@ -156,7 +161,18 @@ class MemberResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('badge_id')
+                    ->relationship('badges', 'name')
+                    ->preload()
+                    ->modifyQueryUsing(function (Builder $query, $data) {
+                        return $query->when(
+                            $data['value'],
+                            fn ($query) => $query->whereHas(
+                                'badges',
+                                fn ($q) => $q->where('badges.id', $data['value'])
+                            )
+                        );
+                    }),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([
@@ -175,7 +191,7 @@ class MemberResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            BadgesRelationManager::class,
         ];
     }
 

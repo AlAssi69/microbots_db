@@ -38,19 +38,15 @@ class Course extends Model
 
     /**
      * The coaches that belong to the Course
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function coaches(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'coach_course', 'course_id', 'coach_id')
-            ->withPivot(["hours"]);
+            ->withPivot(['hours']);
     }
 
     /**
      * The students that belong to the Course
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function students(): BelongsToMany
     {
@@ -59,8 +55,6 @@ class Course extends Model
 
     /**
      * The prerequisite that belong to the Course
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function prerequisite(): BelongsToMany
     {
@@ -69,8 +63,6 @@ class Course extends Model
 
     /**
      * The courses that belong to the prerequisite
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function courses(): BelongsToMany
     {

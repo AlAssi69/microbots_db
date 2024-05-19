@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Department;
 use App\Models\Governorate;
@@ -12,6 +10,7 @@ use App\Models\Major;
 use App\Models\Member;
 use App\Models\MemberTechnicalSpecialization;
 use App\Models\University;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MemberFactory extends Factory
 {

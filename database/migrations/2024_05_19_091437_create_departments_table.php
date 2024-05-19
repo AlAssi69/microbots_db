@@ -18,9 +18,9 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('description');
-            $table->foreignIdFor(Member::class, "head_id")
+            $table->foreignIdFor(Member::class, 'head_id')
                 ->nullable()
-                ->constrained("members");
+                ->constrained('members');
             $table->timestamps();
         });
 

@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ColorResource\Pages;
-use App\Filament\Resources\ColorResource\RelationManagers;
 use App\Models\Color;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ColorResource extends Resource
 {
@@ -30,7 +27,7 @@ class ColorResource extends Resource
                 Forms\Components\Select::make('supervisor_id')
                     ->preload()
                     // TODO: full name
-                    ->relationship('supervisor', "first_name"),
+                    ->relationship('supervisor', 'first_name'),
             ]);
     }
 

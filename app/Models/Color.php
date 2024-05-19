@@ -17,8 +17,6 @@ class Color extends Model
 
     /**
      * Get the supervisor that owns the Color
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function supervisor(): BelongsTo
     {
@@ -27,8 +25,6 @@ class Color extends Model
 
     /**
      * Get all of the projects for the Color
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function projects(): HasMany
     {

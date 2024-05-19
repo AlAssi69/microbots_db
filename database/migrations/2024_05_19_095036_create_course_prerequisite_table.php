@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('course_prerequisite', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Course::class, "course_id")->constrained();
-            $table->foreignIdFor(Course::class, "prerequisite_id")->constrained("courses");
+            $table->foreignIdFor(Course::class, 'course_id')->constrained();
+            $table->foreignIdFor(Course::class, 'prerequisite_id')->constrained('courses');
         });
     }
 

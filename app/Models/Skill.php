@@ -30,8 +30,6 @@ class Skill extends Model
 
     /**
      * The members that belong to the Skill
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function members(): BelongsToMany
     {
@@ -40,8 +38,6 @@ class Skill extends Model
 
     /**
      * The projects that belong to the Skill
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function projects(): BelongsToMany
     {

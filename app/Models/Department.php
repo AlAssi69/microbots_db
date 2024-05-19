@@ -19,7 +19,7 @@ class Department extends Model
     protected $fillable = [
         'name',
         'description',
-        "head_id",
+        'head_id',
     ];
 
     /**
@@ -38,8 +38,6 @@ class Department extends Model
 
     /**
      * Get the head that owns the Department
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function head(): BelongsTo
     {

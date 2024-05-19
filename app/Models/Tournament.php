@@ -34,8 +34,6 @@ class Tournament extends Model
 
     /**
      * The member that belong to the Tournament
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function member(): BelongsToMany
     {
