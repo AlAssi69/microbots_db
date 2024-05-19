@@ -10,6 +10,7 @@ use App\Models\Governorate;
 use App\Models\Level;
 use App\Models\Major;
 use App\Models\Member;
+use App\Models\MemberCategory;
 use App\Models\MemberTechnicalSpecialization;
 use App\Models\University;
 
@@ -46,7 +47,7 @@ class MemberFactory extends Factory
             'governorate_id' => Governorate::factory(),
             'region_name' => $this->faker->word(),
             'street_name' => $this->faker->word(),
-            'category_id' => Category::factory(),
+            'category_id' => MemberCategory::factory(),
             'level_id' => Level::factory(),
             'technical_specialization_id' => MemberTechnicalSpecialization::factory(),
             'department_id' => Department::factory(),

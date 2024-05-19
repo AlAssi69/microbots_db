@@ -13,7 +13,8 @@ class ImportDataCommand extends Command
      * @var string
      */
     protected $signature = 'import:data
-    {name : the Excel file containing data}';
+    {name : the Excel file containing data}
+    {model : the model that your importing for}';
 
     /**
      * The console command description.
@@ -27,6 +28,6 @@ class ImportDataCommand extends Command
      */
     public function handle(ImportDataHelper $importDataHelper)
     {
-        $importDataHelper($this->argument('name'));
+        $importDataHelper($this->argument('name'), $this->argument('model'));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use App\Enums\ExcelSheetEnum;
+use App\Models\Member;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class ImportDataHelper
@@ -18,27 +19,20 @@ class ImportDataHelper
     /**
      * Invoke the class instance.
      */
-    public function __invoke(string $name): void
+    public function __invoke(string $name, string $model): void
     {
-        //Colors
-        foreach (ExcelSheetEnum::cases() as $sheet) {
-            SimpleExcelReader::create(base_path("imports/$name"))
-                ->noHeaderRow()
-                ->skip(2)
-                ->fromSheetName($sheet->value)
-                ->getRows()
-                ->each(function ($row) use ($sheet) {
-                    $this->processSheet($row, $sheet);
-                });
-        }
-    }
-
-    public function processSheet($row, ExcelSheetEnum $type): void
-    {
-        if ($type == ExcelSheetEnum::Colors) {
-            //TODO: Extract information
-        } elseif ($type == ExcelSheetEnum::Courses) {
-            //
-        }
+        SimpleExcelReader::create(base_path("imports/$name"))
+            ->noHeaderRow()
+            ->skip(1)
+            ->getRows()
+            ->each(function ($row) use ($model) {
+                $model = "App\\Models\\$model";
+                $fillable = (new $model)->getFillable();
+                $data = [];
+                foreach ($fillable as $key => $value) {
+                    $data[$value] = $row[$key];
+                }
+                $model::create($data);
+            });
     }
 }
