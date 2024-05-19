@@ -11,5 +11,6 @@ class Color extends Model
 
     public $timestamps = false;
 
+    // TODO: Change semantic to description and add FK
     protected $fillable = ['name', 'semantic', 'supervisor_id'];
 }
