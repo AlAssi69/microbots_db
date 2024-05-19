@@ -28,6 +28,10 @@ class TournamentResource extends Resource
                     ->activeUrl(),
                 Forms\Components\TextInput::make('country')
                     ->required(),
+                Forms\Components\Select::make('member_id')
+                    ->preload()
+                    ->relationship('members', 'full_name')
+                    ->multiple(),
             ]);
     }
 

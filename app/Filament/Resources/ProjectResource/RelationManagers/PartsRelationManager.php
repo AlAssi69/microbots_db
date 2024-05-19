@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Filament\Resources\MemberResource\RelationManagers;
+namespace App\Filament\Resources\ProjectResource\RelationManagers;
 
-use App\Models\Course;
+use App\Models\Part;
+use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class CourseStudentRelationManager extends RelationManager
+class PartsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'course_student';
-
-    public function isReadOnly(): bool
-    {
-        return true;
-    }
+    protected static string $relationship = 'parts';
 
     public function form(Form $form): Form
     {
         return $form
-            ->schema([]);
+            ->schema([
+                Forms\Components\TextInput::make('count')
+                    ->required()
+                    ->numeric(),
+            ]);
     }
 
     public function table(Table $table): Table
@@ -29,20 +29,22 @@ class CourseStudentRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('count'),
+
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->recordSelect(fn ($select) => $select
-                        ->searchable()
-                        ->options(Course::pluck('name', 'id')->toArray()))
-                    ->form(
-                        fn ($action) => [
-                            $action->getRecordSelect(),
-                        ]
-                    ),
+                    ->preloadRecordSelect()
+                    ->recordSelect(fn ($select) => $select->options(Part::pluck('name', 'id')->toArray())->preload())
+                    ->form(fn (Tables\Actions\AttachAction $action) => [
+                        $action->getRecordSelect(),
+                        Forms\Components\TextInput::make('count')
+                            ->required()
+                            ->numeric(),
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

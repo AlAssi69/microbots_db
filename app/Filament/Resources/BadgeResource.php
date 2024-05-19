@@ -32,7 +32,7 @@ class BadgeResource extends Resource
                         Forms\Components\TextInput::make('full_name')
                             ->prefixAction(Action::make('go_to')
                                 ->icon('heroicon-s-arrow-top-right-on-square')
-                                ->url(fn ($record) => route('filament.admin.resources.members.edit', ['record' => $record->id],), shouldOpenInNewTab: true))
+                                ->url(fn ($record) => route('filament.admin.resources.members.edit', ['record' => $record->id]), shouldOpenInNewTab: true))
                             ->disabled(),
                     ])
                     ->columnSpanFull(),

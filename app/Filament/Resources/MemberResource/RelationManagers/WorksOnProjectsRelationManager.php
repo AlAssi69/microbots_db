@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\CourseResource\RelationManagers;
+namespace App\Filament\Resources\MemberResource\RelationManagers;
 
-use App\Models\Member;
+use App\Traits\Traits\Filament\IsReadOnly;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class StudentsRelationManager extends RelationManager
+class WorksOnProjectsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'students';
+    use IsReadOnly;
+
+    protected static string $relationship = 'works_on_projects';
 
     public function form(Form $form): Form
     {
@@ -21,23 +23,15 @@ class StudentsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('full_name')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('full_name'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\AttachAction::make()
-                    ->recordSelect(fn ($select) => $select
-                        ->searchable()
-                        ->options(Member::pluck('full_name', 'id')->toArray()))
-                    ->form(
-                        fn ($action) => [
-                            $action->getRecordSelect(),
-                        ]
-                    ),
+                Tables\Actions\AttachAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

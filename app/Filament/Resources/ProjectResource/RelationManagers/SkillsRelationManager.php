@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\CourseResource\RelationManagers;
+namespace App\Filament\Resources\ProjectResource\RelationManagers;
 
-use App\Models\Member;
+use App\Models\Skill;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class StudentsRelationManager extends RelationManager
+class SkillsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'students';
+    protected static string $relationship = 'skills';
 
     public function form(Form $form): Form
     {
@@ -21,23 +21,20 @@ class StudentsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('full_name')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('full_name'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->recordSelect(fn ($select) => $select
-                        ->searchable()
-                        ->options(Member::pluck('full_name', 'id')->toArray()))
-                    ->form(
-                        fn ($action) => [
-                            $action->getRecordSelect(),
-                        ]
-                    ),
+                    ->preloadRecordSelect()
+                    ->recordSelect(fn ($select) => $select->options(Skill::pluck('name', 'id')->toArray())->preload())
+                    ->form(fn (Tables\Actions\AttachAction $action) => [
+                        $action->getRecordSelect(),
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

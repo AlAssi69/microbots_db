@@ -33,9 +33,9 @@ class Tournament extends Model
     ];
 
     /**
-     * The member that belong to the Tournament
+     * The members that belong to the Tournament
      */
-    public function member(): BelongsToMany
+    public function members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'member_tournament', 'tournament_id', 'member_id');
     }

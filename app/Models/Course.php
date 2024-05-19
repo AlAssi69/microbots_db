@@ -56,9 +56,9 @@ class Course extends Model
     }
 
     /**
-     * The prerequisite that belong to the Course
+     * The prerequisites that belong to the Course
      */
-    public function prerequisite(): BelongsToMany
+    public function prerequisites(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'course_prerequisite', 'course_id', 'prerequisite_id');
     }

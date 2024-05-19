@@ -103,7 +103,7 @@ class Project extends Model
      */
     public function parts(): BelongsToMany
     {
-        return $this->belongsToMany(Part::class, 'part_member', 'project_id', 'part_id')->withPivot(['count']);
+        return $this->belongsToMany(Part::class, 'part_project', 'project_id', 'part_id')->withPivot(['count']);
     }
 
     /**
@@ -111,6 +111,6 @@ class Project extends Model
      */
     public function skills(): BelongsToMany
     {
-        return $this->belongsToMany(Skill::class, 'part_member', 'project_id', 'skill_id');
+        return $this->belongsToMany(Skill::class, 'project_skill', 'project_id', 'skill_id');
     }
 }

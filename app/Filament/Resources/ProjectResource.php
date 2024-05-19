@@ -3,6 +3,9 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\RelationManagers\MembersRelationManager;
+use App\Filament\Resources\ProjectResource\RelationManagers\PartsRelationManager;
+use App\Filament\Resources\ProjectResource\RelationManagers\SkillsRelationManager;
 use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -102,7 +105,9 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MembersRelationManager::class,
+            SkillsRelationManager::class,
+            PartsRelationManager::class,
         ];
     }
 

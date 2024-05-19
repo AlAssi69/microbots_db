@@ -6,6 +6,8 @@ use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\RelationManagers\BadgesRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\CourseCoachRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\CourseStudentRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\SkillsRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\WorksOnProjectsRelationManager;
 use App\Models\Member;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -87,6 +89,11 @@ class MemberResource extends Resource
                     ->required(),
                 Forms\Components\Toggle::make('work_from_home')
                     ->required(),
+                Forms\Components\Select::make('tournament_id')
+                    ->preload()
+                    ->relationship('tournaments', 'name')
+                    ->multiple()
+                    ->disabled(),
             ]);
     }
 
@@ -194,6 +201,8 @@ class MemberResource extends Resource
             BadgesRelationManager::class,
             CourseStudentRelationManager::class,
             CourseCoachRelationManager::class,
+            WorksOnProjectsRelationManager::class,
+            SkillsRelationManager::class,
         ];
     }
 

@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CourseResource\Pages;
 use App\Filament\Resources\CourseResource\RelationManagers\CoachesRelationManager;
+use App\Filament\Resources\CourseResource\RelationManagers\CoursesRelationManager;
+use App\Filament\Resources\CourseResource\RelationManagers\PrerequisitesRelationManager;
 use App\Filament\Resources\CourseResource\RelationManagers\StudentsRelationManager;
 use App\Models\Course;
 use Filament\Forms;
@@ -90,6 +92,8 @@ class CourseResource extends Resource
         return [
             CoachesRelationManager::class,
             StudentsRelationManager::class,
+            PrerequisitesRelationManager::class,
+            CoursesRelationManager::class,
         ];
     }
 

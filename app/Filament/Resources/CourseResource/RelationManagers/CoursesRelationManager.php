@@ -2,15 +2,16 @@
 
 namespace App\Filament\Resources\CourseResource\RelationManagers;
 
-use App\Models\Member;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-class StudentsRelationManager extends RelationManager
+class CoursesRelationManager extends RelationManager
 {
-    protected static string $relationship = 'students';
+    protected static string $relationship = 'courses';
+
+    protected static ?string $title = 'CCCCCCCCCCCCC';
 
     public function form(Form $form): Form
     {
@@ -21,23 +22,16 @@ class StudentsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('full_name')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('full_name'),
+                Tables\Columns\TextColumn::make('name'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->recordSelect(fn ($select) => $select
-                        ->searchable()
-                        ->options(Member::pluck('full_name', 'id')->toArray()))
-                    ->form(
-                        fn ($action) => [
-                            $action->getRecordSelect(),
-                        ]
-                    ),
+                    ->preloadRecordSelect(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
