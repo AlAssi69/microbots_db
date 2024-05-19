@@ -2,8 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Enums\ExcelSheetEnum;
-use App\Models\Member;
 use Spatie\SimpleExcel\SimpleExcelReader;
 
 class ImportDataHelper

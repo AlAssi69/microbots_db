@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Governorate;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GovernorateFactory extends Factory
 {

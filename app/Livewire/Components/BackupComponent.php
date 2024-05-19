@@ -8,7 +8,6 @@ use Livewire\Component;
 
 class BackupComponent extends Component
 {
-
     public function backup()
     {
         Artisan::call('backup:run');
