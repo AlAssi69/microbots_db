@@ -22,8 +22,6 @@ class MemberResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('hash_id')
-                    ->required(),
                 Forms\Components\DatePicker::make('join_date')
                     ->required(),
                 Forms\Components\TextInput::make('first_name')

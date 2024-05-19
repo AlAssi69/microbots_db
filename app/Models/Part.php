@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Part extends Model
@@ -35,5 +36,10 @@ class Part extends Model
     public function projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'part_project', 'part_id', 'project_id')->withPivot(['count']);
+    }
+
+    public function part_type(): BelongsTo
+    {
+        return $this->belongsTo(PartType::class);
     }
 }

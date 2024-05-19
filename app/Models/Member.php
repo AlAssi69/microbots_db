@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Models\HasHashId;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Member extends Model
 {
     use HasFactory;
+    use HasHashId;
 
     /**
      * The attributes that are mass assignable.
