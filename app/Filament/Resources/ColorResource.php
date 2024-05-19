@@ -57,7 +57,11 @@ class ColorResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    ExportPdfAction::bulkAction(),
+                    ExportPdfAction::bulkAction([
+                        'name',
+                        'description',
+                        'supervisor.first_name',
+                    ]),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);

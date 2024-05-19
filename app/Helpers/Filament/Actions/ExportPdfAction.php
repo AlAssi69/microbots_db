@@ -9,18 +9,28 @@ use Illuminate\Support\Facades\Blade;
 
 class ExportPdfAction
 {
-    public static function bulkAction(): BulkAction
+    public static function bulkAction(array|null $columns = null): BulkAction
     {
         return BulkAction::make('export_pdf')
             ->label('PDF')
             ->color('success')
             // ->icon('heroicon-s-download')
-            ->action(function ($records) {
-                return response()->streamDownload(function () use ($records) {
+            ->action(function ($records) use ($columns) {
+                $columns ??= $records->first()->getFillables();
+                return response()->streamDownload(function () use ($records, $columns) {
                     echo Pdf::loadHtml(
-                        Blade::render('pdf', ['records' => $records])
+                        Blade::render('pdf', [
+                            'records' => $records,
+                            'columns' => static::getColumns($columns),
+                        ])
                     )->stream();
                 }, now()->toDateTimeString() . '.pdf');
             });
+    }
+
+    private static function getColumns(array $columns): array
+    {
+        return collect($columns)
+            ->toArray();
     }
 }
