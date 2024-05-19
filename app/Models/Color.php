@@ -22,7 +22,7 @@ class Color extends Model
      */
     public function supervisior(): BelongsTo
     {
-        return $this->belongsTo(Member::class, 'supervisor_id', 'id');
+        return $this->belongsTo(Member::class, 'supervisor_id');
     }
 
     /**
@@ -32,6 +32,6 @@ class Color extends Model
      */
     public function projects(): HasMany
     {
-        return $this->hasMany(Project::class, 'color_id',);
+        return $this->hasMany(Project::class, 'color_id');
     }
 }

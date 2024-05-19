@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->foreignIdFor(Member::class, 'supervisor_id')
                 ->nullable()
-                ->constrained()
+                ->constrained('members')
                 ->nullOnDelete();
         });
     }

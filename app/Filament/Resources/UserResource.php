@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ColorResource\Pages;
-use App\Helpers\Filament\Actions\ExportPdfAction;
-use App\Filament\Resources\ColorResource\RelationManagers;
-use App\Models\Color;
+use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ColorResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = Color::class;
+    protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -26,10 +25,13 @@ class ColorResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\TextInput::make('email')
+                    ->email()
                     ->required(),
-                Forms\Components\TextInput::make('supervisor_id')
-                    ->numeric(),
+                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->required(),
             ]);
     }
 
@@ -39,11 +41,19 @@ class ColorResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('supervisor_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -57,7 +67,6 @@ class ColorResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    ExportPdfAction::bulkAction(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
@@ -73,9 +82,9 @@ class ColorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListColors::route('/'),
-            'create' => Pages\CreateColor::route('/create'),
-            'edit' => Pages\EditColor::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }
