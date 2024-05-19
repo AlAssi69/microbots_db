@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\RelationManagers\BadgesRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\CourseCoachRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\CourseStudentRelationManager;
 use App\Models\Member;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -190,6 +192,8 @@ class MemberResource extends Resource
     {
         return [
             BadgesRelationManager::class,
+            CourseStudentRelationManager::class,
+            CourseCoachRelationManager::class,
         ];
     }
 

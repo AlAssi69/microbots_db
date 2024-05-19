@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\BadgeResource\Pages;
 use App\Models\Badge;
 use Filament\Forms;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -24,6 +25,16 @@ class BadgeResource extends Resource
                     ->required(),
                 Forms\Components\Textarea::make('description')
                     ->required()
+                    ->columnSpanFull(),
+                Forms\Components\Repeater::make('members')
+                    ->relationship('members')
+                    ->schema([
+                        Forms\Components\TextInput::make('full_name')
+                            ->prefixAction(Action::make('go_to')
+                                ->icon('heroicon-s-arrow-top-right-on-square')
+                                ->url(fn ($record) => route('filament.admin.resources.members.edit', ['record' => $record->id],), shouldOpenInNewTab: true))
+                            ->disabled(),
+                    ])
                     ->columnSpanFull(),
             ]);
     }
