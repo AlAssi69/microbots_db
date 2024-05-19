@@ -26,13 +26,15 @@ class BankTransactionResource extends Resource
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),
+                // TODO: Change date format
                 Forms\Components\DateTimePicker::make('datetime')
-                    ->required(),
+                    ->required()
+                    ->seconds(false),
                 Forms\Components\Textarea::make('reason')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('member_id')
-                    ->relationship('member', 'id')
+                    ->relationship('member', 'first_name')
                     ->required(),
             ]);
     }
@@ -47,7 +49,7 @@ class BankTransactionResource extends Resource
                 Tables\Columns\TextColumn::make('datetime')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('member.id')
+                Tables\Columns\TextColumn::make('member.first_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -35,14 +35,15 @@ class ProjectResource extends Resource
                     ->relationship('color', 'name')
                     ->required(),
                 Forms\Components\Select::make('supervisior_id')
-                    ->relationship('supervisior', 'id')
+                    ->relationship('supervisior', 'first_name')
                     ->required(),
                 Forms\Components\Select::make('level_id')
                     ->relationship('level', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('budget')
                     ->numeric(),
-                Forms\Components\DateTimePicker::make('deadline'),
+                Forms\Components\DateTimePicker::make('deadline')
+                    ->seconds(false),
             ]);
     }
 
@@ -62,7 +63,7 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('color.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('supervisior.id')
+                Tables\Columns\TextColumn::make('supervisior.first_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('level.name')

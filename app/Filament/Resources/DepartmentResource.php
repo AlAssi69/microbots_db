@@ -28,6 +28,10 @@ class DepartmentResource extends Resource
                 Forms\Components\Textarea::make('description')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\Select::make('head_id')
+                    ->preload()
+                    // TODO: Full name
+                    ->relationship("head", "first_name"),
             ]);
     }
 
@@ -36,6 +40,11 @@ class DepartmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->searchable()
+                    ->limit(100),
+                Tables\Columns\TextColumn::make('head.first_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

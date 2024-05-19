@@ -33,12 +33,14 @@ class MemberResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('last_name')
                     ->required(),
-                Forms\Components\TextInput::make('sex')
-                    ->required(),
+                Forms\Components\Select::make('sex')
+                    ->required()
+                    ->options(["M" => "Male", "F" => "Female"]),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->unique()
                     ->required(),
-                Forms\Components\TextInput::make('date_of_birth')
+                Forms\Components\DatePicker::make('date_of_birth')
                     ->required(),
                 Forms\Components\Select::make('university_id')
                     ->relationship('university', 'name')
@@ -47,7 +49,10 @@ class MemberResource extends Resource
                     ->relationship('major', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('uni_year')
-                    ->required(),
+                    ->required()
+                    ->minValue(1)
+                    ->maxValue(5)
+                    ->numeric(),
                 Forms\Components\TextInput::make('phone_number')
                     ->tel()
                     ->required(),
@@ -95,6 +100,10 @@ class MemberResource extends Resource
                 Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sex')
+                    ->color(fn ($state) => $state == "M" ? "blue" : "pink")
+                    ->badge()
+                    ->formatStateUsing(fn ($state) =>
+                    $state == "M" ? "Male" : "Female")
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
@@ -135,10 +144,8 @@ class MemberResource extends Resource
                 Tables\Columns\TextColumn::make('department.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('frozen')
-                    ->boolean(),
-                Tables\Columns\IconColumn::make('work_from_home')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('frozen'),
+                Tables\Columns\ToggleColumn::make('work_from_home'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

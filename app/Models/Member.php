@@ -76,7 +76,12 @@ class Member extends Model
 
     public function color(): HasOne
     {
-        return $this->hasOne(Color::class);
+        return $this->hasOne(Color::class, "supervisor_id");
+    }
+
+    public function department_head(): HasOne
+    {
+        return $this->hasOne(Department::class, "head_id");
     }
 
     public function university(): BelongsTo

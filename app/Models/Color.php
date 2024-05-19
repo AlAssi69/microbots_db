@@ -16,11 +16,11 @@ class Color extends Model
     protected $fillable = ['name', 'description', 'supervisor_id'];
 
     /**
-     * Get the supervisior that owns the Color
+     * Get the supervisor that owns the Color
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function supervisior(): BelongsTo
+    public function supervisor(): BelongsTo
     {
         return $this->belongsTo(Member::class, 'supervisor_id', 'id');
     }
@@ -32,6 +32,6 @@ class Color extends Model
      */
     public function projects(): HasMany
     {
-        return $this->hasMany(Project::class, 'color_id',);
+        return $this->hasMany(Project::class, 'color_id');
     }
 }

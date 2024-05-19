@@ -23,12 +23,14 @@ class ColorResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\ColorPicker::make('name')
                     ->required(),
                 Forms\Components\TextInput::make('description')
                     ->required(),
-                Forms\Components\TextInput::make('supervisor_id')
-                    ->numeric(),
+                Forms\Components\Select::make('supervisor_id')
+                    ->preload()
+                    // TODO: full name
+                    ->relationship('supervisor', "first_name"),
             ]);
     }
 
@@ -36,10 +38,11 @@ class ColorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\ColorColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('supervisor_id')
                     ->numeric()
                     ->sortable(),
@@ -52,6 +55,7 @@ class ColorResource extends Resource
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make(),
+                    // TODO: Take me to the projects
                 ]),
             ])
             ->bulkActions([
