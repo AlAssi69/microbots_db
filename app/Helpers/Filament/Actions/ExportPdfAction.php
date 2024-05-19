@@ -4,12 +4,11 @@ namespace App\Helpers\Filament\Actions;
 
 use Barryvdh\DomPDF\Facade\Pdf;
 use Filament\Tables\Actions\BulkAction;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Blade;
 
 class ExportPdfAction
 {
-    public static function bulkAction(array|null $columns = null): BulkAction
+    public static function bulkAction(?array $columns = null): BulkAction
     {
         return BulkAction::make('export_pdf')
             ->label('PDF')
@@ -17,6 +16,7 @@ class ExportPdfAction
             // ->icon('heroicon-s-download')
             ->action(function ($records) use ($columns) {
                 $columns ??= $records->first()->getFillables();
+
                 return response()->streamDownload(function () use ($records, $columns) {
                     echo Pdf::loadHtml(
                         Blade::render('pdf', [
@@ -24,7 +24,7 @@ class ExportPdfAction
                             'columns' => static::getColumns($columns),
                         ])
                     )->stream();
-                }, now()->toDateTimeString() . '.pdf');
+                }, now()->toDateTimeString().'.pdf');
             });
     }
 

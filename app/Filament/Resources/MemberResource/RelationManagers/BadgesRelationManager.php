@@ -7,8 +7,6 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BadgesRelationManager extends RelationManager
 {
@@ -30,7 +28,9 @@ class BadgesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('name')
+                    ->url(fn ($record) => route('filament.admin.resources.badges.edit', ['record' => $record->id]), shouldOpenInNewTab: true)
+                    ->color('blue'),
                 Tables\Columns\TextColumn::make('date')->date()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('reason')->limit(50)

@@ -31,7 +31,7 @@ class BankTransactionResource extends Resource
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('member_id')
-                    ->relationship('member', 'first_name')
+                    ->relationship('member', 'full_name')
                     ->preload()
                     ->required(),
             ]);
@@ -47,7 +47,7 @@ class BankTransactionResource extends Resource
                 Tables\Columns\TextColumn::make('datetime')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('member.first_name')
+                Tables\Columns\TextColumn::make('member.full_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

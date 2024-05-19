@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ColorResource\Pages;
 use App\Helpers\Filament\Actions\ExportPdfAction;
-use App\Filament\Resources\ColorResource\RelationManagers;
 use App\Models\Color;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -29,7 +28,7 @@ class ColorResource extends Resource
                 Forms\Components\Select::make('supervisor_id')
                     ->preload()
                     // TODO: full name
-                    ->relationship('supervisor', 'first_name'),
+                    ->relationship('supervisor', 'full_name'),
             ]);
     }
 
@@ -62,7 +61,7 @@ class ColorResource extends Resource
                     ExportPdfAction::bulkAction([
                         'name',
                         'description',
-                        'supervisor.first_name',
+                        'supervisor.full_name',
                     ]),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
