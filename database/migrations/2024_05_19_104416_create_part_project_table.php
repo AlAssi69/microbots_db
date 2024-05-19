@@ -1,6 +1,7 @@
 <?php
 
-use App\Models\Member;
+use App\Models\Part;
+use App\Models\Project;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,14 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colors', function (Blueprint $table) {
+        Schema::create('part_project', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->foreignIdFor(Member::class, 'supervisor_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
+            $table->foreignIdFor(Part::class, "part_id")->constrained();
+            $table->foreignIdFor(Project::class, "project_id")->constrained();
+            $table->integer("count");
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colors');
+        Schema::dropIfExists('part_project');
     }
 };

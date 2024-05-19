@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tournament extends Model
 {
@@ -30,4 +31,14 @@ class Tournament extends Model
         'id' => 'integer',
         'date' => 'date',
     ];
+
+    /**
+     * The member that belong to the Tournament
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function member(): BelongsToMany
+    {
+        return $this->belongsToMany(Member::class, 'member_tournament', 'tournament_id', 'member_id');
+    }
 }

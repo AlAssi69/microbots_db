@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Member;
+use App\Models\Skill;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,14 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colors', function (Blueprint $table) {
+        Schema::create('member_skill', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->foreignIdFor(Member::class, 'supervisor_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
+            $table->foreignIdFor(Member::class, "member_id")->constrained();
+            $table->foreignIdFor(Skill::class, "skill_id")->constrained();
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colors');
+        Schema::dropIfExists('member_skill');
     }
 };

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Badge;
 use App\Models\Member;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,14 +13,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colors', function (Blueprint $table) {
+        Schema::create('badge_member', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
-            $table->foreignIdFor(Member::class, 'supervisor_id')
-                ->nullable()
-                ->constrained()
-                ->nullOnDelete();
+            $table->foreignIdFor(Badge::class, "badge_id")
+                ->constrained();
+            $table->foreignIdFor(Member::class, "member_id")
+                ->constrained();
+            $table->date("date");
+            $table->text("reason");
         });
     }
 
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colors');
+        Schema::dropIfExists('badge_member');
     }
 };
