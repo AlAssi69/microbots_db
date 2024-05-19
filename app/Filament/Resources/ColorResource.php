@@ -42,7 +42,7 @@ class ColorResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('supervisor_id')
+                Tables\Columns\TextColumn::make('supervisor.full_name')
                     ->numeric()
                     ->sortable(),
             ])

@@ -21,16 +21,10 @@ class ExportPdfAction
                     echo Pdf::loadHtml(
                         Blade::render('pdf', [
                             'records' => $records,
-                            'columns' => static::getColumns($columns),
+                            'columns' => $columns,
                         ])
                     )->stream();
                 }, now()->toDateTimeString() . '.pdf');
             });
-    }
-
-    private static function getColumns(array $columns): array
-    {
-        return collect($columns)
-            ->toArray();
     }
 }
