@@ -20,8 +20,6 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('hash_id')
-                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required(),
                 Forms\Components\TextInput::make('description')
@@ -33,7 +31,7 @@ class ProjectResource extends Resource
                     ->required()
                     ->preload(),
                 Forms\Components\Select::make('supervisior_id')
-                    ->relationship('supervisior', 'first_name')
+                    ->relationship('supervisior', 'full_name')
                     ->required()
                     ->preload(),
                 Forms\Components\Select::make('level_id')
@@ -63,7 +61,7 @@ class ProjectResource extends Resource
                 Tables\Columns\TextColumn::make('color.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('supervisior.first_name')
+                Tables\Columns\TextColumn::make('supervisior.full_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('level.name')

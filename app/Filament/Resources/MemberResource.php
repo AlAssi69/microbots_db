@@ -22,8 +22,6 @@ class MemberResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('hash_id')
-                    ->required(),
                 Forms\Components\DatePicker::make('join_date')
                     ->required(),
                 Forms\Components\TextInput::make('first_name')
@@ -161,7 +159,7 @@ class MemberResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('badge_id')
+                Tables\Filters\SelectFilter::make('badge')
                     ->relationship('badges', 'name')
                     ->preload()
                     ->modifyQueryUsing(function (Builder $query, $data) {

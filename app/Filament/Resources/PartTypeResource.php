@@ -2,17 +2,20 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\BadgeResource\Pages;
-use App\Models\Badge;
+use App\Filament\Resources\PartTypeResource\Pages;
+use App\Filament\Resources\PartTypeResource\RelationManagers;
+use App\Models\PartType;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BadgeResource extends Resource
+class PartTypeResource extends Resource
 {
-    protected static ?string $model = Badge::class;
+    protected static ?string $model = PartType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -22,9 +25,6 @@ class BadgeResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\Textarea::make('description')
-                    ->required()
-                    ->columnSpanFull(),
             ]);
     }
 
@@ -34,29 +34,15 @@ class BadgeResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable()
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                // TODO: Add badge_member
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\DeleteAction::make(),
-                    Tables\Actions\Action::make('Preview Member')
-                        ->url(fn ($record) => "members?tableFilters[badge_id][value]={$record->id}"),
                 ]),
             ])
             ->bulkActions([
@@ -76,9 +62,9 @@ class BadgeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBadges::route('/'),
-            'create' => Pages\CreateBadge::route('/create'),
-            'edit' => Pages\EditBadge::route('/{record}/edit'),
+            'index' => Pages\ListPartTypes::route('/'),
+            'create' => Pages\CreatePartType::route('/create'),
+            'edit' => Pages\EditPartType::route('/{record}/edit'),
         ];
     }
 }

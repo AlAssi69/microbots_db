@@ -28,7 +28,7 @@ class DepartmentResource extends Resource
                 Forms\Components\Select::make('head_id')
                     ->preload()
                     // TODO: Full name
-                    ->relationship('head', 'first_name'),
+                    ->relationship('head', 'full_name'),
             ]);
     }
 
@@ -41,7 +41,7 @@ class DepartmentResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->searchable()
                     ->limit(100),
-                Tables\Columns\TextColumn::make('head.first_name')
+                Tables\Columns\TextColumn::make('head.full_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
