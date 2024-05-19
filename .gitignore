@@ -17,4 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-/imports
+/imports/draft.yaml
+/.blueprint
