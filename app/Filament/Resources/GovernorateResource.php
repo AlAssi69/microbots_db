@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ColorResource\Pages;
-use App\Filament\Resources\ColorResource\RelationManagers;
-use App\Models\Color;
+use App\Filament\Resources\GovernorateResource\Pages;
+use App\Filament\Resources\GovernorateResource\RelationManagers;
+use App\Models\Governorate;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ColorResource extends Resource
+class GovernorateResource extends Resource
 {
-    protected static ?string $model = Color::class;
+    protected static ?string $model = Governorate::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,10 +25,6 @@ class ColorResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('description')
-                    ->required(),
-                Forms\Components\TextInput::make('supervisor_id')
-                    ->numeric(),
             ]);
     }
 
@@ -38,11 +34,14 @@ class ColorResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('supervisor_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -71,9 +70,9 @@ class ColorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListColors::route('/'),
-            'create' => Pages\CreateColor::route('/create'),
-            'edit' => Pages\EditColor::route('/{record}/edit'),
+            'index' => Pages\ListGovernorates::route('/'),
+            'create' => Pages\CreateGovernorate::route('/create'),
+            'edit' => Pages\EditGovernorate::route('/{record}/edit'),
         ];
     }
 }

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ColorResource\Pages;
-use App\Filament\Resources\ColorResource\RelationManagers;
-use App\Models\Color;
+use App\Filament\Resources\WarehouseResource\Pages;
+use App\Filament\Resources\WarehouseResource\RelationManagers;
+use App\Models\Warehouse;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ColorResource extends Resource
+class WarehouseResource extends Resource
 {
-    protected static ?string $model = Color::class;
+    protected static ?string $model = Warehouse::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -25,9 +25,10 @@ class ColorResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\TextInput::make('type')
                     ->required(),
-                Forms\Components\TextInput::make('supervisor_id')
+                Forms\Components\TextInput::make('count')
+                    ->required()
                     ->numeric(),
             ]);
     }
@@ -38,11 +39,19 @@ class ColorResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                Tables\Columns\TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('supervisor_id')
+                Tables\Columns\TextColumn::make('count')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -71,9 +80,9 @@ class ColorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListColors::route('/'),
-            'create' => Pages\CreateColor::route('/create'),
-            'edit' => Pages\EditColor::route('/{record}/edit'),
+            'index' => Pages\ListWarehouses::route('/'),
+            'create' => Pages\CreateWarehouse::route('/create'),
+            'edit' => Pages\EditWarehouse::route('/{record}/edit'),
         ];
     }
 }
