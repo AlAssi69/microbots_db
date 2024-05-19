@@ -18,35 +18,52 @@ class BadgesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('date')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\DatePicker::make('date')
+                    ->required(),
+                Forms\Components\Textarea::make('reason')
+                    ->required(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('date')
+            ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('date'),
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\TextColumn::make('date')->date()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('reason')->limit(50)
+                    ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
-                Tables\Actions\AssociateAction::make(),
+                // Tables\Actions\CreateAction::make(),
+                Tables\Actions\AttachAction::make()
+                    ->preloadRecordSelect()
+                    ->form(
+                        fn ($action) => [
+                            $action->getRecordSelect(),
+                            // Forms\Components\Select::make('badge_id')
+                            //     ->relationship('badges', 'name')
+                            //     ->preload()
+                            //     ->required(),
+                            Forms\Components\DatePicker::make('date')
+                                ->required(),
+                            Forms\Components\Textarea::make('reason')
+                                ->required(),
+                        ]
+                    ),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DissociateAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DissociateBulkAction::make(),
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

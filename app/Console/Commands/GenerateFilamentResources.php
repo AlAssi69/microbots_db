@@ -6,8 +6,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 
-use function Pest\Laravel\artisan;
-
 class GenerateFilamentResources extends Command
 {
     /**
@@ -29,7 +27,7 @@ class GenerateFilamentResources extends Command
      */
     public function handle()
     {
-        $models = File::allFiles(app_path("Models"));
+        $models = File::allFiles(app_path('Models'));
         foreach ($models as $file) {
             $model = $file->getFilenameWithoutExtension();
             Artisan::call("make:filament-resource $model -G -F");

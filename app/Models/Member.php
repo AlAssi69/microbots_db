@@ -76,7 +76,12 @@ class Member extends Model
 
     public function color(): HasOne
     {
-        return $this->hasOne(Color::class);
+        return $this->hasOne(Color::class, 'supervisor_id');
+    }
+
+    public function department_head(): HasOne
+    {
+        return $this->hasOne(Department::class, 'head_id');
     }
 
     public function university(): BelongsTo
@@ -116,30 +121,24 @@ class Member extends Model
 
     /**
      * The badges that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function badges(): BelongsToMany
     {
         return $this->belongsToMany(Badge::class, 'badge_member', 'member_id', 'badge_id')
-            ->withPivot(["date", "reason"]);
+            ->withPivot(['date', 'reason']);
     }
 
     /**
      * The courses that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function course_coach(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'coach_course', 'coach_id', 'course_id')
-            ->withPivot(["hours"]);
+            ->withPivot(['hours']);
     }
 
     /**
      * The course_student that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function course_student(): BelongsToMany
     {
@@ -148,19 +147,15 @@ class Member extends Model
 
     /**
      * The projects that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function works_on_projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'member_project', 'member_id', 'project_id')
-            ->withPivot(["participation_date"]);
+            ->withPivot(['participation_date']);
     }
 
     /**
      * The skills that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function skills(): BelongsToMany
     {
@@ -169,8 +164,6 @@ class Member extends Model
 
     /**
      * The tournaments that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function tournaments(): BelongsToMany
     {
@@ -179,45 +172,37 @@ class Member extends Model
 
     /**
      * The borrow_warehouses that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function borrow_warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'member_warehouse_borrow')
-            ->withPivot(["date", "reason", "count"]);
+            ->withPivot(['date', 'reason', 'count']);
     }
 
     /**
      * The borrow_projects that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function borrow_projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'member_warehouse_borrow', 'member_id', 'project_id')
-            ->withPivot(["date", "reason", "count"]);
+            ->withPivot(['date', 'reason', 'count']);
     }
 
     /**
      * The return_warehouses that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function return_warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'member_warehouse_return')
-            ->withPivot(["date", "count"]);
+            ->withPivot(['date', 'count']);
     }
 
     /**
      * The return_projects that belong to the Member
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function return_projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'member_warehouse_return', 'member_id', 'project_id')
-            ->withPivot(["date", "count"]);
+            ->withPivot(['date', 'count']);
     }
 }

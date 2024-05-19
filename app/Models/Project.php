@@ -59,63 +59,53 @@ class Project extends Model
 
     /**
      * The members that belong to the Project
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'member_project', 'project_id', 'member_id')
-            ->withPivot(["participation_date"]);
+            ->withPivot(['participation_date']);
     }
 
     /**
      * The borrow_warehouses that belong to the Project
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function borrow_warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'member_warehouse_borrow', 'project_id', 'warehouse_id')
-            ->withPivot(["date", "reason", "count"]);
+            ->withPivot(['date', 'reason', 'count']);
     }
 
     public function borrow_members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'member_warehouse_borrow', 'project_id', 'member_id')
-            ->withPivot(["date", "reason", "count"]);
+            ->withPivot(['date', 'reason', 'count']);
     }
 
     /**
      * The return_warehouses that belong to the Project
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function return_warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'member_warehouse_return', 'project_id', 'warehouse_id')
-            ->withPivot(["date", "count"]);
+            ->withPivot(['date', 'count']);
     }
 
     public function return_members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'member_warehouse_return', 'project_id', 'member_id')
-            ->withPivot(["date", "count"]);
+            ->withPivot(['date', 'count']);
     }
 
     /**
      * The parts that belong to the Project
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function parts(): BelongsToMany
     {
-        return $this->belongsToMany(Part::class, 'part_member', 'project_id', 'part_id')->withPivot(["count"]);
+        return $this->belongsToMany(Part::class, 'part_member', 'project_id', 'part_id')->withPivot(['count']);
     }
 
     /**
      * The skills that belong to the Project
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function skills(): BelongsToMany
     {

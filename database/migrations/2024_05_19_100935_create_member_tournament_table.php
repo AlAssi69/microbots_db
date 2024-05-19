@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('member_tournament', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Member::class, "member_id")->constrained();
-            $table->foreignIdFor(Tournament::class, "tournament_id")->constrained();
+            $table->foreignIdFor(Member::class, 'member_id')->constrained();
+            $table->foreignIdFor(Tournament::class, 'tournament_id')->constrained();
         });
     }
 

@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('part_project', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Part::class, "part_id")->constrained();
-            $table->foreignIdFor(Project::class, "project_id")->constrained();
-            $table->integer("count");
+            $table->foreignIdFor(Part::class, 'part_id')->constrained();
+            $table->foreignIdFor(Project::class, 'project_id')->constrained();
+            $table->integer('count');
         });
     }
 

@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('badge_member', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Badge::class, "badge_id")
+            $table->foreignIdFor(Badge::class, 'badge_id')
                 ->constrained();
-            $table->foreignIdFor(Member::class, "member_id")
+            $table->foreignIdFor(Member::class, 'member_id')
                 ->constrained();
-            $table->date("date");
-            $table->text("reason");
+            $table->date('date');
+            $table->text('reason');
         });
     }
 

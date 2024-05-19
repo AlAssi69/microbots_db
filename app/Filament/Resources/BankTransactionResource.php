@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BankTransactionResource\Pages;
-use App\Filament\Resources\BankTransactionResource\RelationManagers;
 use App\Models\BankTransaction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BankTransactionResource extends Resource
 {
@@ -26,13 +23,16 @@ class BankTransactionResource extends Resource
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),
+                // TODO: Change date format
                 Forms\Components\DateTimePicker::make('datetime')
-                    ->required(),
+                    ->required()
+                    ->seconds(false),
                 Forms\Components\Textarea::make('reason')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\Select::make('member_id')
-                    ->relationship('member', 'id')
+                    ->relationship('member', 'first_name')
+                    ->preload()
                     ->required(),
             ]);
     }
@@ -47,7 +47,7 @@ class BankTransactionResource extends Resource
                 Tables\Columns\TextColumn::make('datetime')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('member.id')
+                Tables\Columns\TextColumn::make('member.first_name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

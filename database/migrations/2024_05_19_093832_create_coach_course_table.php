@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('coach_course', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Course::class, "course_id")->constrained();
-            $table->foreignIdFor(Member::class, "coach_id")->constrained();
-            $table->integer("hours");
+            $table->foreignIdFor(Course::class, 'course_id')->constrained();
+            $table->foreignIdFor(Member::class, 'coach_id')->constrained('members');
+            $table->integer('hours');
         });
     }
 

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('project_skill', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Project::class, "project_id")->constrained();
-            $table->foreignIdFor(Skill::class, "skill_id")->constrained();
+            $table->foreignIdFor(Project::class, 'project_id')->constrained();
+            $table->foreignIdFor(Skill::class, 'skill_id')->constrained();
         });
     }
 

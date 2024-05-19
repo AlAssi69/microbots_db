@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TournamentResource\Pages;
-use App\Filament\Resources\TournamentResource\RelationManagers;
 use App\Models\Tournament;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class TournamentResource extends Resource
 {
@@ -27,7 +24,8 @@ class TournamentResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
-                Forms\Components\TextInput::make('url'),
+                Forms\Components\TextInput::make('url')
+                    ->activeUrl(),
                 Forms\Components\TextInput::make('country')
                     ->required(),
             ]);
@@ -43,6 +41,9 @@ class TournamentResource extends Resource
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('url')
+                    ->label('URL')
+                    ->color('blue')
+                    ->url(fn ($state) => $state, shouldOpenInNewTab: true)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('country')
                     ->searchable(),

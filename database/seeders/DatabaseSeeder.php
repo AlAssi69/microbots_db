@@ -19,5 +19,20 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ashraf AlAssi',
             'email' => 'admin@admin.com',
         ]);
+
+        $this->call([
+            BadgeSeeder::class,
+            ColorSeeder::class,
+            PartSeeder::class,
+            LevelSeeder::class,
+            MajorSeeder::class,
+            SkillSeeder::class,
+            WarehouseSeeder::class,
+            TournamentSeeder::class,
+            UniversitySeeder::class,
+            GovernorateSeeder::class,
+            MemberCategorySeeder::class,
+            MemberTechnicalSpecializationSeeder::class,
+        ]);
     }
 }
