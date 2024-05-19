@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ColorResource\Pages;
+use App\Helpers\Filament\Actions\ExportPdfAction;
 use App\Models\Color;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -33,7 +34,7 @@ class ColorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ColorColumn::make('name')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('semantic'),
                 Tables\Columns\TextColumn::make('supervisor_id')
@@ -51,6 +52,7 @@ class ColorResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
+                    ExportPdfAction::bulkAction(),
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
