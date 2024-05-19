@@ -1,10 +1,14 @@
 <table>
     <tr>
-        <th>Test</th>
+        @foreach ($records->first()->getFillable() as $fillable)
+            <th>{{ $fillable }}</th>
+        @endforeach
     </tr>
     @foreach ($records as $item)
         <tr>
-            <td>{{ $item->name }}</td>
+            @foreach ($item->getFillable() as $fillable)
+                <td>{{ $item->{$fillable} }}</td>
+            @endforeach
         </tr>
     @endforeach
 </table>
