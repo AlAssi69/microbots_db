@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Badge extends Model
 {
@@ -27,4 +28,15 @@ class Badge extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+     * The members that belong to the Badge
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function members(): BelongsToMany
+    {
+        return $this->belongsToMany(Member::class, 'badge_member', 'badge_id', 'member_id')
+            ->withPivot(["date", "reason"]);
+    }
 }

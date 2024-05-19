@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Color extends Model
 {
@@ -11,6 +13,25 @@ class Color extends Model
 
     public $timestamps = false;
 
-    // TODO: Change semantic to description and add FK
-    protected $fillable = ['name', 'semantic', 'supervisor_id'];
+    protected $fillable = ['name', 'description', 'supervisor_id'];
+
+    /**
+     * Get the supervisior that owns the Color
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function supervisior(): BelongsTo
+    {
+        return $this->belongsTo(Member::class, 'supervisor_id', 'id');
+    }
+
+    /**
+     * Get all of the projects for the Color
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'color_id',);
+    }
 }

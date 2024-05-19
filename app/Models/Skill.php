@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Skill extends Model
 {
@@ -26,4 +27,24 @@ class Skill extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+     * The members that belong to the Skill
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function members(): BelongsToMany
+    {
+        return $this->belongsToMany(Member::class, 'member_skill', 'skill_id', 'member_id');
+    }
+
+    /**
+     * The projects that belong to the Skill
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function projects(): BelongsToMany
+    {
+        return $this->belongsToMany(Project::class, 'member_skill', 'skill_id', 'project_id');
+    }
 }
