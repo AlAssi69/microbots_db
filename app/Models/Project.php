@@ -92,7 +92,8 @@ class Project extends Model
     public function return_warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'member_warehouse_return', 'project_id', 'warehouse_id')
-            ->withPivot(['date', 'count']);
+            ->using(MemberWarehouseBorrow::class)
+            ->withPivot(['member_id', 'date', 'count']);
     }
 
     public function return_members(): BelongsToMany

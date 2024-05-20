@@ -64,7 +64,7 @@ class BadgeResource extends Resource
                 // TODO: Add badge_member
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\ViewAction::make(),
+
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\Action::make('Preview Member')
                         ->url(fn ($record) => "members?tableFilters[badge_id][value]={$record->id}"),

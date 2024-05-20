@@ -46,7 +46,7 @@ class SkillResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\ViewAction::make(),
+
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])

@@ -3,12 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemberResource\Pages;
-use App\Filament\Resources\MemberResource\RelationManagers\BadgesRelationManager;
-use App\Filament\Resources\MemberResource\RelationManagers\BorrowWarehousesRelationManager;
-use App\Filament\Resources\MemberResource\RelationManagers\CourseCoachRelationManager;
-use App\Filament\Resources\MemberResource\RelationManagers\CourseStudentRelationManager;
-use App\Filament\Resources\MemberResource\RelationManagers\SkillsRelationManager;
-use App\Filament\Resources\MemberResource\RelationManagers\WorksOnProjectsRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers;
 use App\Filament\Resources\MemberResource\Widgets\MemberGeneralInfoCards;
 use App\Models\Member;
 use Filament\Forms;
@@ -187,7 +182,7 @@ class MemberResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\ViewAction::make(),
+
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])
@@ -201,12 +196,13 @@ class MemberResource extends Resource
     public static function getRelations(): array
     {
         return [
-            BadgesRelationManager::class,
-            CourseStudentRelationManager::class,
-            CourseCoachRelationManager::class,
-            WorksOnProjectsRelationManager::class,
-            SkillsRelationManager::class,
-            BorrowWarehousesRelationManager::class,
+            RelationManagers\BadgesRelationManager::class,
+            RelationManagers\CourseStudentRelationManager::class,
+            RelationManagers\CourseCoachRelationManager::class,
+            RelationManagers\WorksOnProjectsRelationManager::class,
+            RelationManagers\SkillsRelationManager::class,
+            RelationManagers\BorrowWarehousesRelationManager::class,
+            RelationManagers\ReturnWarehousesRelationManager::class,
         ];
     }
 

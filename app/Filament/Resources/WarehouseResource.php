@@ -3,8 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WarehouseResource\Pages;
-use App\Filament\Resources\WarehouseResource\RelationManagers\BorrowMembersRelationManager;
-use App\Filament\Resources\WarehouseResource\Widgets\RemainigCountWarehouseWidget;
+use App\Filament\Resources\WarehouseResource\RelationManagers;
+use App\Filament\Resources\WarehouseResource\Widgets;
 use App\Models\Warehouse;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -61,7 +61,7 @@ class WarehouseResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\ViewAction::make(),
+
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])
@@ -75,14 +75,15 @@ class WarehouseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            BorrowMembersRelationManager::class,
+            RelationManagers\BorrowMembersRelationManager::class,
+            RelationManagers\ReturnMembersRelationManager::class,
         ];
     }
 
     public static function getWidgets(): array
     {
         return [
-            RemainigCountWarehouseWidget::class,
+            Widgets\RemainigCountWarehouseWidget::class,
         ];
     }
 

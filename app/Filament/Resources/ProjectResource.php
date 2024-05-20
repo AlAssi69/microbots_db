@@ -89,7 +89,7 @@ class ProjectResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\ViewAction::make(),
+
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])
@@ -107,6 +107,7 @@ class ProjectResource extends Resource
             RelationManagers\SkillsRelationManager::class,
             RelationManagers\PartsRelationManager::class,
             RelationManagers\BorrowWarehousesRelationManager::class,
+            RelationManagers\ReturnWarehousesRelationManager::class,
         ];
     }
 

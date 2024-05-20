@@ -37,7 +37,7 @@ class Warehouse extends Model
     {
         return Attribute::make(
             get: fn () => $this->count - $this->borrow_members()
-                ->wherePivot('date', '>', now())
+                ->sum('count') + $this->return_members()
                 ->sum('count'),
         );
     }
@@ -68,7 +68,8 @@ class Warehouse extends Model
     public function return_members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'member_warehouse_return', 'warehouse_id', 'member_id')
-            ->withPivot(['date', 'count']);
+            ->using(MemberWarehouseBorrow::class)
+            ->withPivot(['project_id', 'date', 'count']);
     }
 
     /**

@@ -36,7 +36,7 @@ class BorrowWarehousesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('pivot.member.full_name'),
                 Tables\Columns\TextColumn::make('date'),
                 Tables\Columns\TextColumn::make('reason'),
-                Tables\Columns\TextColumn::make('count'),
+                Tables\Columns\TextColumn::make('pivot.count')->label('Count'),
             ])
             ->filters([
                 //

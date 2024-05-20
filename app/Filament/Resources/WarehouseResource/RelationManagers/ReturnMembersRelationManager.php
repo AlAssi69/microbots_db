@@ -4,30 +4,28 @@ namespace App\Filament\Resources\WarehouseResource\RelationManagers;
 
 use App\Models\Member;
 use App\Models\Project;
-use App\Models\Warehouse;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BorrowMembersRelationManager extends RelationManager
+class ReturnMembersRelationManager extends RelationManager
 {
-    protected static string $relationship = 'borrow_members';
+    protected static string $relationship = 'return_members';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('project_id')
-                    ->label('Project')
-                    ->options(Project::pluck('name', 'id')->toArray())->searchable(),
+                Forms\Components\TextInput::make('full_name')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
-                Forms\Components\Textarea::make('reason')
-                    ->required(),
                 Forms\Components\TextInput::make('count')
-                    ->maxValue(fn () => $this->getOwnerRecord()->remaining_count)
                     ->numeric()
                     ->required(),
             ]);
@@ -41,7 +39,6 @@ class BorrowMembersRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('full_name'),
                 Tables\Columns\TextColumn::make('pivot.project.name'),
                 Tables\Columns\TextColumn::make('date'),
-                Tables\Columns\TextColumn::make('reason'),
                 Tables\Columns\TextColumn::make('count'),
             ])
             ->filters([
@@ -59,8 +56,6 @@ class BorrowMembersRelationManager extends RelationManager
                             ->required()
                             ->options(Project::pluck('name', 'id')->toArray())->searchable(),
                         Forms\Components\DatePicker::make('date')
-                            ->required(),
-                        Forms\Components\Textarea::make('reason')
                             ->required(),
                         Forms\Components\TextInput::make('count')
                             ->maxValue(fn () => $this->getOwnerRecord()->remaining_count)

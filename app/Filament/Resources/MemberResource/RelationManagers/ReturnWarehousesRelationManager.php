@@ -11,11 +11,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class BorrowWarehousesRelationManager extends RelationManager
+class ReturnWarehousesRelationManager extends RelationManager
 {
     use IsReadOnly;
 
-    protected static string $relationship = 'borrow_warehouses';
+    protected static string $relationship = 'return_warehouses';
 
     public function form(Form $form): Form
     {
@@ -35,7 +35,6 @@ class BorrowWarehousesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('pivot.project.name'),
                 Tables\Columns\TextColumn::make('date'),
-                Tables\Columns\TextColumn::make('reason'),
                 Tables\Columns\TextColumn::make('pivot.count')->label('Count'),
             ])
             ->filters([
