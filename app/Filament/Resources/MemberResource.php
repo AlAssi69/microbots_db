@@ -8,6 +8,7 @@ use App\Filament\Resources\MemberResource\RelationManagers\CourseCoachRelationMa
 use App\Filament\Resources\MemberResource\RelationManagers\CourseStudentRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\SkillsRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\WorksOnProjectsRelationManager;
+use App\Filament\Resources\MemberResource\Widgets\MemberGeneralInfoCards;
 use App\Models\Member;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -91,6 +92,7 @@ class MemberResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('tournament_id')
                     ->preload()
+                    ->visibleOn('edit')
                     ->relationship('tournaments', 'name')
                     ->multiple()
                     ->disabled(),
@@ -203,6 +205,13 @@ class MemberResource extends Resource
             CourseCoachRelationManager::class,
             WorksOnProjectsRelationManager::class,
             SkillsRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            MemberGeneralInfoCards::class,
         ];
     }
 
