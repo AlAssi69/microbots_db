@@ -14,6 +14,8 @@ class GovernorateResource extends Resource
 {
     protected static ?string $model = Governorate::class;
 
+    protected static ?string $navigationParentItem = 'Members';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

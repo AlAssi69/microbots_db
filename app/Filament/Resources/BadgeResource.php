@@ -15,6 +15,8 @@ class BadgeResource extends Resource
 {
     protected static ?string $model = Badge::class;
 
+    protected static ?string $navigationParentItem = 'Members';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -61,10 +63,8 @@ class BadgeResource extends Resource
                 //
             ])
             ->actions([
-                // TODO: Add badge_member
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-
                     Tables\Actions\DeleteAction::make(),
                     Tables\Actions\Action::make('Preview Member')
                         ->url(fn ($record) => "members?tableFilters[badge_id][value]={$record->id}"),

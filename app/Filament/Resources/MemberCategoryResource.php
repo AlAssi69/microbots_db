@@ -14,6 +14,8 @@ class MemberCategoryResource extends Resource
 {
     protected static ?string $model = MemberCategory::class;
 
+    protected static ?string $navigationParentItem = 'Members';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

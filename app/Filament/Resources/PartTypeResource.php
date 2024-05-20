@@ -14,6 +14,8 @@ class PartTypeResource extends Resource
 {
     protected static ?string $model = PartType::class;
 
+    protected static ?string $navigationParentItem = 'Parts';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

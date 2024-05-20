@@ -14,6 +14,8 @@ class TournamentResource extends Resource
 {
     protected static ?string $model = Tournament::class;
 
+    protected static ?string $navigationParentItem = 'Members';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

@@ -15,6 +15,8 @@ class ColorResource extends Resource
 {
     protected static ?string $model = Color::class;
 
+    protected static ?string $navigationParentItem = 'Projects';
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -27,7 +29,6 @@ class ColorResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('supervisor_id')
                     ->preload()
-                    // TODO: full name
                     ->relationship('supervisor', 'full_name'),
             ]);
     }
@@ -51,9 +52,7 @@ class ColorResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-
                     Tables\Actions\DeleteAction::make(),
-                    // TODO: Take me to the projects
                 ]),
             ])
             ->bulkActions([
