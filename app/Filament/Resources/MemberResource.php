@@ -6,6 +6,7 @@ use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\RelationManagers;
 use App\Filament\Resources\MemberResource\Widgets\MemberGeneralInfoCards;
 use App\Models\Member;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -207,13 +208,19 @@ class MemberResource extends Resource
                 Tables\Filters\SelectFilter::make('major')
                     ->relationship('major', 'name')
                     ->preload(),
+                Tables\Filters\SelectFilter::make('level')
+                    ->relationship('level', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('skill')
+                    ->relationship('skills', 'name')
+                    ->preload(),
                 Tables\Filters\SelectFilter::make('category')
                     ->relationship('category', 'name')
                     ->preload(),
                 Tables\Filters\SelectFilter::make('technicalSpecialization')
                     ->relationship('technicalSpecialization', 'name')
                     ->preload(),
-                    Tables\Filters\SelectFilter::make('uni_year')
+                Tables\Filters\SelectFilter::make('uni_year')
                     ->options([
                         1 => 1,
                         2 => 2,
@@ -224,6 +231,23 @@ class MemberResource extends Resource
                 Tables\Filters\TernaryFilter::make('frozen'),
                 Tables\Filters\TernaryFilter::make('work_from_home'),
                 Tables\Filters\Filter::make('joined_at')
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['from'] && !$data['to']) {
+                            return null;
+                        }
+
+                        $return = '';
+
+                        if ($data['from']) {
+                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                        }
+
+                        if ($data['to']) {
+                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                        }
+
+                        return $return;
+                    })
                     ->form([
                         Forms\Components\DatePicker::make('from'),
                         Forms\Components\DatePicker::make('to'),

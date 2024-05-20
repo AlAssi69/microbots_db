@@ -6,11 +6,13 @@ use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
 use App\Models\Color;
 use App\Models\Project;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class ProjectResource extends Resource
@@ -46,8 +48,9 @@ class ProjectResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('color_id')
                     ->getOptionLabelFromRecordUsing(fn (Color $record) =>
-                    '<div class="fi-ta-color-item h-6 w-6 rounded-md" style="background-color: ' . $record->name . ';">dosaijmsdaoi</div>')
+                    '<div class="fi-ta-color-item h-6 w-6 rounded-md mt-2" style="background-color: ' . $record->name . ';"></div>')
                     ->allowHtml()
+                    ->searchable()
                     ->relationship('color', 'name')
                     ->required()
                     ->preload(),
@@ -103,15 +106,89 @@ class ProjectResource extends Resource
             ])
             ->filters([
                 Tables\Filters\Filter::make('color')
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['color']) {
+                            return null;
+                        }
+
+                        $color = Color::find($data['color'])->value('name');
+
+                        return "Color: $color";
+                    })
                     ->form([
-                        // Forms\Components\Select::make('color')
-                        //     // ->getOptionLabelFromRecordUsing(fn (Color $record) =>
-                        //     // )
-                        //     ->allowHtml()
-                        //     ->options(Color::pluck('name', 'id')
-                        //         ->map(fn ($name) => new HtmlString('<span style="color: ' . $name . ';">' . $name . '</span>'))
-                        //         ->toArray()),
-                    ]),
+                        Forms\Components\Select::make('color')
+                            ->getOptionLabelFromRecordUsing(fn (Color $record) =>
+                            '<div class="fi-ta-color-item h-6 w-6 rounded-md mt-2" style="background-color: ' . $record->name . ';"></div>')
+                            ->allowHtml()
+                            ->searchable()
+                            ->relationship('color', 'name')
+                            ->required()
+                            ->preload(),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['color'], fn ($query) => $query->where('color_id', $data['color']));
+                    }),
+                Tables\Filters\Filter::make('start_date')
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['from'] && !$data['to']) {
+                            return null;
+                        }
+
+                        $return = '';
+
+                        if ($data['from']) {
+                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                        }
+
+                        if ($data['to']) {
+                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                        }
+
+                        return $return;
+                    })
+                    ->form([
+                        Forms\Components\DatePicker::make('from'),
+                        Forms\Components\DatePicker::make('to'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['from'], fn ($query) => $query->whereDate('start_date', '>=', $data['from']))
+                            ->when($data['to'], fn ($query) => $query->whereDate('start_date', '<=', $data['to']));
+                    }),
+                Tables\Filters\SelectFilter::make('level')
+                    ->relationship('level', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('skill')
+                    ->relationship('skills', 'name')
+                    ->preload(),
+                    Tables\Filters\Filter::make('deadline')
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['from'] && !$data['to']) {
+                            return null;
+                        }
+
+                        $return = '';
+
+                        if ($data['from']) {
+                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                        }
+
+                        if ($data['to']) {
+                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                        }
+
+                        return $return;
+                    })
+                    ->form([
+                        Forms\Components\DatePicker::make('from'),
+                        Forms\Components\DatePicker::make('to'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['from'], fn ($query) => $query->whereDate('deadline', '>=', $data['from']))
+                            ->when($data['to'], fn ($query) => $query->whereDate('deadline', '<=', $data['to']));
+                    }),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

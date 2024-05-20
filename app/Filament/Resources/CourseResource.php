@@ -6,6 +6,7 @@ use App\Filament\Resources\CourseResource\Pages;
 use App\Filament\Resources\CourseResource\RelationManagers;
 use App\Filament\Resources\CourseResource\Widgets;
 use App\Models\Course;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -87,7 +88,24 @@ class CourseResource extends Resource
             ])
             ->filters([
                 Tables\Filters\TernaryFilter::make('certificate'),
-                Tables\Filters\Filter::make('date_between')
+                Tables\Filters\Filter::make('start_date')
+                    ->indicateUsing(function (array $data): ?string {
+                        if (!$data['from'] && !$data['to']) {
+                            return null;
+                        }
+
+                        $return = '';
+
+                        if ($data['from']) {
+                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                        }
+
+                        if ($data['to']) {
+                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                        }
+
+                        return $return;
+                    })
                     ->form([
                         Forms\Components\DatePicker::make('from'),
                         Forms\Components\DatePicker::make('to'),
