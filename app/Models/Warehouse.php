@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivot\MemberWarehouseBorrow;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -36,6 +37,7 @@ class Warehouse extends Model
     public function borrow_members(): BelongsToMany
     {
         return $this->belongsToMany(Member::class, 'member_warehouse_borrow', 'warehouse_id', 'member_id')
+            ->using(MemberWarehouseBorrow::class)
             ->withPivot(['project_id', 'date', 'reason', 'count']);
     }
 
@@ -44,7 +46,8 @@ class Warehouse extends Model
      */
     public function borrow_projects(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class, 'member_project_borrow', 'warehouse_id', 'project_id')
+        return $this->belongsToMany(Project::class, 'member_warehouse_borrow', 'warehouse_id', 'project_id')
+            ->using(MemberWarehouseBorrow::class)
             ->withPivot(['member_id', 'date', 'reason', 'count']);
     }
 

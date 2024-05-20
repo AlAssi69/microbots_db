@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Pivot\MemberWarehouseBorrow;
 use App\Traits\Models\HasHashId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -178,6 +179,7 @@ class Member extends Model
     public function borrow_warehouses(): BelongsToMany
     {
         return $this->belongsToMany(Warehouse::class, 'member_warehouse_borrow')
+            ->using(MemberWarehouseBorrow::class)
             ->withPivot(['project_id', 'date', 'reason', 'count']);
     }
 
@@ -187,6 +189,7 @@ class Member extends Model
     public function borrow_projects(): BelongsToMany
     {
         return $this->belongsToMany(Project::class, 'member_warehouse_borrow', 'member_id', 'project_id')
+            ->using(MemberWarehouseBorrow::class)
             ->withPivot(['warehouse_id', 'date', 'reason', 'count']);
     }
 

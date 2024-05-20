@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\MemberResource\Pages;
 use App\Filament\Resources\MemberResource\RelationManagers\BadgesRelationManager;
+use App\Filament\Resources\MemberResource\RelationManagers\BorrowWarehousesRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\CourseCoachRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\CourseStudentRelationManager;
 use App\Filament\Resources\MemberResource\RelationManagers\SkillsRelationManager;
@@ -205,6 +206,7 @@ class MemberResource extends Resource
             CourseCoachRelationManager::class,
             WorksOnProjectsRelationManager::class,
             SkillsRelationManager::class,
+            BorrowWarehousesRelationManager::class,
         ];
     }
 

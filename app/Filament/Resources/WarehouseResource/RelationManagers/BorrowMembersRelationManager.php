@@ -10,7 +10,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 
-// TODO: Fix the error when enter warehouse
 class BorrowMembersRelationManager extends RelationManager
 {
     protected static string $relationship = 'borrow_members';
@@ -20,6 +19,7 @@ class BorrowMembersRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('project_id')
+                    ->label('Project')
                     ->options(Project::pluck('name', 'id')->toArray())->searchable(),
                 Forms\Components\DatePicker::make('date')
                     ->required(),
@@ -37,6 +37,7 @@ class BorrowMembersRelationManager extends RelationManager
             ->recordTitleAttribute('full_name')
             ->columns([
                 Tables\Columns\TextColumn::make('full_name'),
+                Tables\Columns\TextColumn::make('pivot.project.name'),
                 Tables\Columns\TextColumn::make('date'),
                 Tables\Columns\TextColumn::make('reason'),
                 Tables\Columns\TextColumn::make('count'),
@@ -50,6 +51,7 @@ class BorrowMembersRelationManager extends RelationManager
                     ->form(fn (Tables\Actions\AttachAction $action) => [
                         $action->getRecordSelect(),
                         Forms\Components\Select::make('project_id')
+                            ->label('Project')
                             ->options(Project::pluck('name', 'id')->toArray())->searchable(),
                         Forms\Components\DatePicker::make('date')
                             ->required(),
