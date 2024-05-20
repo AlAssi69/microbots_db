@@ -9,6 +9,8 @@ use Filament\Tables\Table;
 
 class PrerequisitesRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
+
     protected static string $relationship = 'prerequisites';
 
     public function form(Form $form): Form

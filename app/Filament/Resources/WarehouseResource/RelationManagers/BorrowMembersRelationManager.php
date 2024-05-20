@@ -4,7 +4,6 @@ namespace App\Filament\Resources\WarehouseResource\RelationManagers;
 
 use App\Models\Member;
 use App\Models\Project;
-use App\Models\Warehouse;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -13,6 +12,8 @@ use Filament\Tables\Table;
 
 class BorrowMembersRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
+
     protected static string $relationship = 'borrow_members';
 
     public function form(Form $form): Form

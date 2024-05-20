@@ -11,6 +11,8 @@ use Filament\Tables\Table;
 
 class CoachesRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
+
     protected static string $relationship = 'coaches';
 
     public function form(Form $form): Form

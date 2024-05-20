@@ -3,10 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CourseResource\Pages;
-use App\Filament\Resources\CourseResource\RelationManagers\CoachesRelationManager;
-use App\Filament\Resources\CourseResource\RelationManagers\CoursesRelationManager;
-use App\Filament\Resources\CourseResource\RelationManagers\PrerequisitesRelationManager;
-use App\Filament\Resources\CourseResource\RelationManagers\StudentsRelationManager;
+use App\Filament\Resources\CourseResource\RelationManagers;
+use App\Filament\Resources\CourseResource\Widgets;
 use App\Models\Course;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -90,10 +88,17 @@ class CourseResource extends Resource
     public static function getRelations(): array
     {
         return [
-            CoachesRelationManager::class,
-            StudentsRelationManager::class,
-            PrerequisitesRelationManager::class,
-            CoursesRelationManager::class,
+            RelationManagers\CoachesRelationManager::class,
+            RelationManagers\StudentsRelationManager::class,
+            RelationManagers\PrerequisitesRelationManager::class,
+            RelationManagers\CoursesRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            Widgets\CourseCardsWidget::class,
         ];
     }
 

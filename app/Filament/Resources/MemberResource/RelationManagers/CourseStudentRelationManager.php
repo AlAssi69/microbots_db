@@ -10,6 +10,8 @@ use Filament\Tables\Table;
 
 class CourseStudentRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
+
     protected static string $relationship = 'course_student';
 
     public function isReadOnly(): bool

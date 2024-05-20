@@ -11,6 +11,8 @@ use Filament\Tables\Table;
 
 class MembersRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
+
     protected static string $relationship = 'members';
 
     public function form(Form $form): Form

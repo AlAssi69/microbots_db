@@ -9,6 +9,8 @@ use Filament\Tables\Table;
 
 class SkillsRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
+
     protected static string $relationship = 'skills';
 
     public function form(Form $form): Form

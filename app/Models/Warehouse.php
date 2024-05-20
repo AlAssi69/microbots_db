@@ -32,7 +32,6 @@ class Warehouse extends Model
         'id' => 'integer',
     ];
 
-
     protected function remainingCount(): Attribute
     {
         return Attribute::make(

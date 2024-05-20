@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Traits\Filament;
+namespace App\Traits\Filament;
 
 trait IsReadOnly
 {

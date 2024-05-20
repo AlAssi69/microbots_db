@@ -2,17 +2,16 @@
 
 namespace App\Filament\Resources\ProjectResource\RelationManagers;
 
-use App\Traits\Traits\Filament\IsReadOnly;
+use App\Traits\Filament\IsReadOnly;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BorrowWarehousesRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
     use IsReadOnly;
 
     protected static string $relationship = 'borrow_warehouses';

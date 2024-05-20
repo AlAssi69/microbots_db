@@ -9,6 +9,8 @@ use Filament\Tables\Table;
 
 class CoursesRelationManager extends RelationManager
 {
+    use \App\Traits\Filament\RelationManagerHasBadge;
+
     protected static string $relationship = 'courses';
 
     protected static ?string $title = 'CCCCCCCCCCCCC';
