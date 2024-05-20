@@ -228,8 +228,6 @@ class MemberResource extends Resource
                         4 => 4,
                         5 => 5,
                     ]),
-                Tables\Filters\TernaryFilter::make('frozen'),
-                Tables\Filters\TernaryFilter::make('work_from_home'),
                 Tables\Filters\Filter::make('joined_at')
                     ->indicateUsing(function (array $data): ?string {
                         if (!$data['from'] && !$data['to']) {
