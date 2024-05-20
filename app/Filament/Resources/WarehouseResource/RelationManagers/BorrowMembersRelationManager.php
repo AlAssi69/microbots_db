@@ -4,6 +4,7 @@ namespace App\Filament\Resources\WarehouseResource\RelationManagers;
 
 use App\Models\Member;
 use App\Models\Project;
+use App\Models\Warehouse;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -49,15 +50,19 @@ class BorrowMembersRelationManager extends RelationManager
                 Tables\Actions\AttachAction::make()
                     ->recordSelect(fn ($select) => $select->options(Member::pluck('full_name', 'id')->toArray())->searchable())
                     ->form(fn (Tables\Actions\AttachAction $action) => [
-                        $action->getRecordSelect(),
+                        $action->getRecordSelect()
+                            ->label('Member')
+                            ->required(),
                         Forms\Components\Select::make('project_id')
                             ->label('Project')
+                            ->required()
                             ->options(Project::pluck('name', 'id')->toArray())->searchable(),
                         Forms\Components\DatePicker::make('date')
                             ->required(),
                         Forms\Components\Textarea::make('reason')
                             ->required(),
                         Forms\Components\TextInput::make('count')
+                            ->maxValue(fn () => $this->getOwnerRecord()->remaining_count)
                             ->numeric()
                             ->required(),
                     ]),

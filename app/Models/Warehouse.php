@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Pivot\MemberWarehouseBorrow;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -30,6 +31,16 @@ class Warehouse extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+
+    protected function remainingCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->count - $this->borrow_members()
+                ->wherePivot('date', '>', now())
+                ->sum('count'),
+        );
+    }
 
     /**
      * The borrow_members that belong to the Warehouse

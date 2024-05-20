@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\WarehouseResource\Pages;
 use App\Filament\Resources\WarehouseResource\RelationManagers\BorrowMembersRelationManager;
+use App\Filament\Resources\WarehouseResource\Widgets\RemainigCountWarehouseWidget;
 use App\Models\Warehouse;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -42,6 +43,9 @@ class WarehouseResource extends Resource
                 Tables\Columns\TextColumn::make('count')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('remaining_count')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -72,6 +76,13 @@ class WarehouseResource extends Resource
     {
         return [
             BorrowMembersRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            RemainigCountWarehouseWidget::class,
         ];
     }
 
