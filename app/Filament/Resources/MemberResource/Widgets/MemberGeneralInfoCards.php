@@ -23,11 +23,17 @@ class MemberGeneralInfoCards extends BaseWidget
         $memberWithMostBadges = Member::query()
             ->withCount('badges')->orderBy('badges_count', 'desc')->first();
 
+        $memberWithMostTournaments = Member::query()
+            ->withCount('tournaments')->orderBy('tournaments_count', 'desc')->first();
+
         return [
             Stat::make('Number of members', Member::count())
                 ->chart($data->map(fn (TrendValue $value) => $value->aggregate)->toArray()),
             Stat::make('Member with most badges', $memberWithMostBadges->full_name)
                 ->description("number of badges is {$memberWithMostBadges->badges_count}")
+                ->descriptionColor('success'),
+            Stat::make('Member with most tournaments', $memberWithMostTournaments->full_name)
+                ->description("number of tournaments is {$memberWithMostTournaments->tournaments_count}")
                 ->descriptionColor('success'),
         ];
     }

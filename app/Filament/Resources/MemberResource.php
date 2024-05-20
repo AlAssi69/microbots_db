@@ -10,14 +10,36 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class MemberResource extends Resource
 {
     protected static ?string $model = Member::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $recordTitleAttribute = 'full_name';
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return ['full_name'];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        return [
+            'Department' => $record->department->name,
+            'Year' => $record->uni_year,
+        ];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()->with(['department']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -165,18 +187,51 @@ class MemberResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->filtersFormColumns(2)
             ->filters([
                 Tables\Filters\SelectFilter::make('badge')
                     ->relationship('badges', 'name')
-                    ->preload()
-                    ->modifyQueryUsing(function (Builder $query, $data) {
-                        return $query->when(
-                            $data['value'],
-                            fn ($query) => $query->whereHas(
-                                'badges',
-                                fn ($q) => $q->where('badges.id', $data['value'])
-                            )
-                        );
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('tournament')
+                    ->relationship('tournaments', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('university')
+                    ->relationship('university', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('department')
+                    ->relationship('department', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('governorate')
+                    ->relationship('governorate', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('major')
+                    ->relationship('major', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('category')
+                    ->relationship('category', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('technicalSpecialization')
+                    ->relationship('technicalSpecialization', 'name')
+                    ->preload(),
+                    Tables\Filters\SelectFilter::make('uni_year')
+                    ->options([
+                        1 => 1,
+                        2 => 2,
+                        3 => 3,
+                        4 => 4,
+                        5 => 5,
+                    ]),
+                Tables\Filters\TernaryFilter::make('frozen'),
+                Tables\Filters\TernaryFilter::make('work_from_home'),
+                Tables\Filters\Filter::make('joined_at')
+                    ->form([
+                        Forms\Components\DatePicker::make('from'),
+                        Forms\Components\DatePicker::make('to'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['from'], fn ($query) => $query->whereDate('join_date', '>=', $data['from']))
+                            ->when($data['to'], fn ($query) => $query->whereDate('join_date', '<=', $data['to']));
                     }),
             ])
             ->actions([
