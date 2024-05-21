@@ -19,6 +19,7 @@ class ListMembers extends ListRecords
             ->where('frozen', true);
         $workFromHome = Member::query()
             ->where('work_from_home', true);
+
         return [
             'all' => Tab::make('All')->badge(Member::count()),
             'frozen' => Tab::make('Frozen')

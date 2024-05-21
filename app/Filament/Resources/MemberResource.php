@@ -11,7 +11,6 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -230,18 +229,18 @@ class MemberResource extends Resource
                     ]),
                 Tables\Filters\Filter::make('joined_at')
                     ->indicateUsing(function (array $data): ?string {
-                        if (!$data['from'] && !$data['to']) {
+                        if (! $data['from'] && ! $data['to']) {
                             return null;
                         }
 
                         $return = '';
 
                         if ($data['from']) {
-                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                            $return .= 'From: '.Carbon::parse($data['from'])->toDateString();
                         }
 
                         if ($data['to']) {
-                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                            $return .= ' To: '.Carbon::parse($data['to'])->toDateString();
                         }
 
                         return $return;

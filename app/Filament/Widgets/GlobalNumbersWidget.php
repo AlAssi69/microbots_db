@@ -6,13 +6,12 @@ use App\Models\Course;
 use App\Models\Member;
 use App\Models\Project;
 use Filament\Widgets\ChartWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
 
 class GlobalNumbersWidget extends BaseWidget
 {
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getType(): string
     {

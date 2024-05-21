@@ -12,8 +12,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class CourseResource extends Resource
 {
@@ -90,18 +90,18 @@ class CourseResource extends Resource
                 Tables\Filters\TernaryFilter::make('certificate'),
                 Tables\Filters\Filter::make('start_date')
                     ->indicateUsing(function (array $data): ?string {
-                        if (!$data['from'] && !$data['to']) {
+                        if (! $data['from'] && ! $data['to']) {
                             return null;
                         }
 
                         $return = '';
 
                         if ($data['from']) {
-                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                            $return .= 'From: '.Carbon::parse($data['from'])->toDateString();
                         }
 
                         if ($data['to']) {
-                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                            $return .= ' To: '.Carbon::parse($data['to'])->toDateString();
                         }
 
                         return $return;

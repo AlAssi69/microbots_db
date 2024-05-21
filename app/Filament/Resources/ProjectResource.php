@@ -47,8 +47,7 @@ class ProjectResource extends Resource
                 Forms\Components\DatePicker::make('start_date')
                     ->required(),
                 Forms\Components\Select::make('color_id')
-                    ->getOptionLabelFromRecordUsing(fn (Color $record) =>
-                    '<div class="fi-ta-color-item h-6 w-6 rounded-md mt-2" style="background-color: ' . $record->name . ';"></div>')
+                    ->getOptionLabelFromRecordUsing(fn (Color $record) => '<div class="fi-ta-color-item h-6 w-6 rounded-md mt-2" style="background-color: '.$record->name.';"></div>')
                     ->allowHtml()
                     ->searchable()
                     ->relationship('color', 'name')
@@ -107,7 +106,7 @@ class ProjectResource extends Resource
             ->filters([
                 Tables\Filters\Filter::make('color')
                     ->indicateUsing(function (array $data): ?string {
-                        if (!$data['color']) {
+                        if (! $data['color']) {
                             return null;
                         }
 
@@ -117,8 +116,7 @@ class ProjectResource extends Resource
                     })
                     ->form([
                         Forms\Components\Select::make('color')
-                            ->getOptionLabelFromRecordUsing(fn (Color $record) =>
-                            '<div class="fi-ta-color-item h-6 w-6 rounded-md mt-2" style="background-color: ' . $record->name . ';"></div>')
+                            ->getOptionLabelFromRecordUsing(fn (Color $record) => '<div class="fi-ta-color-item h-6 w-6 rounded-md mt-2" style="background-color: '.$record->name.';"></div>')
                             ->allowHtml()
                             ->searchable()
                             ->relationship('color', 'name')
@@ -131,18 +129,18 @@ class ProjectResource extends Resource
                     }),
                 Tables\Filters\Filter::make('start_date')
                     ->indicateUsing(function (array $data): ?string {
-                        if (!$data['from'] && !$data['to']) {
+                        if (! $data['from'] && ! $data['to']) {
                             return null;
                         }
 
                         $return = '';
 
                         if ($data['from']) {
-                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                            $return .= 'From: '.Carbon::parse($data['from'])->toDateString();
                         }
 
                         if ($data['to']) {
-                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                            $return .= ' To: '.Carbon::parse($data['to'])->toDateString();
                         }
 
                         return $return;
@@ -162,20 +160,20 @@ class ProjectResource extends Resource
                 Tables\Filters\SelectFilter::make('skill')
                     ->relationship('skills', 'name')
                     ->preload(),
-                    Tables\Filters\Filter::make('deadline')
+                Tables\Filters\Filter::make('deadline')
                     ->indicateUsing(function (array $data): ?string {
-                        if (!$data['from'] && !$data['to']) {
+                        if (! $data['from'] && ! $data['to']) {
                             return null;
                         }
 
                         $return = '';
 
                         if ($data['from']) {
-                            $return .= "From: " . Carbon::parse($data['from'])->toDateString();
+                            $return .= 'From: '.Carbon::parse($data['from'])->toDateString();
                         }
 
                         if ($data['to']) {
-                            $return .= " To: " . Carbon::parse($data['to'])->toDateString();
+                            $return .= ' To: '.Carbon::parse($data['to'])->toDateString();
                         }
 
                         return $return;
