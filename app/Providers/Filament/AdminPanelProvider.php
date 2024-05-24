@@ -29,10 +29,13 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->profile()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => 'rgb(255, 81, 19)',
                 'blue' => Color::Blue,
                 'pink' => Color::Pink,
             ])
+            ->font('Tajawal')
+            ->brandName('Microbots Team')
+            // ->brandLogo('images/Microbots.svg')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
