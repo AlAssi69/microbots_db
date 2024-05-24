@@ -16,8 +16,6 @@ return new class extends Migration
     {
         Schema::create('member_warehouse_borrow', function (Blueprint $table) {
             $table->id();
-
-            // TODO: Make sure about the non-binary relationship
             $table->foreignIdFor(Member::class, 'member_id')->constrained();
             $table->foreignIdFor(Warehouse::class, 'warehouse_id')->constrained();
             $table->foreignIdFor(Project::class, 'project_id')->constrained();

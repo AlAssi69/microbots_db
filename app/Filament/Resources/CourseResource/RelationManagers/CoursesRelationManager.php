@@ -13,7 +13,7 @@ class CoursesRelationManager extends RelationManager
 
     protected static string $relationship = 'courses';
 
-    protected static ?string $title = 'CCCCCCCCCCCCC';
+    protected static ?string $title = 'Courses';
 
     public function form(Form $form): Form
     {

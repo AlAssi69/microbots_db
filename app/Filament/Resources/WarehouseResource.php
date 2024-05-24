@@ -24,7 +24,9 @@ class WarehouseResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('type')
+                // TODO: fix the relationship between part type and warehouses
+                Forms\Components\Select::make('type')
+                    ->relationship('part_type', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('count')
                     ->required()
@@ -61,7 +63,6 @@ class WarehouseResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])

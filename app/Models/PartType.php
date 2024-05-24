@@ -34,4 +34,9 @@ class PartType extends Model
     {
         return $this->hasMany(Part::class);
     }
+
+    public function warehouses(): HasMany
+    {
+        return $this->hasMany(Warehouse::class);
+    }
 }

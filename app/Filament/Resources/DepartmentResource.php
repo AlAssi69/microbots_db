@@ -29,7 +29,6 @@ class DepartmentResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\Select::make('head_id')
                     ->preload()
-                    // TODO: Full name
                     ->relationship('head', 'full_name'),
             ]);
     }
@@ -42,7 +41,7 @@ class DepartmentResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable()
-                    ->limit(100),
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('head.full_name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')

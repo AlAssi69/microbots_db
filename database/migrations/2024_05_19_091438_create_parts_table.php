@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
+        // Schema::disableForeignKeyConstraints();
 
         Schema::create('parts', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('type');
+            $table->foreignIdFor('type')->constrained('name');
             $table->timestamps();
         });
 
-        Schema::enableForeignKeyConstraints();
+        // Schema::enableForeignKeyConstraints();
     }
 
     /**

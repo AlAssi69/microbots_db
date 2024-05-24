@@ -6,6 +6,7 @@ use App\Models\Pivot\MemberWarehouseBorrow;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Warehouse extends Model
@@ -78,5 +79,10 @@ class Warehouse extends Model
     {
         return $this->belongsToMany(Project::class, 'member_project_return', 'warehouse_id', 'project_id')
             ->withPivot(['date', 'reason', 'count']);
+    }
+
+    public function part_type(): BelongsTo
+    {
+        return $this->belongsTo(PartType::class);
     }
 }

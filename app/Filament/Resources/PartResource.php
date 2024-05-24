@@ -22,8 +22,11 @@ class PartResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
-                Forms\Components\TextInput::make('type')
-                    ->required(),
+                // TODO: fix the relationship between part type and parts
+                Forms\Components\Select::make('type')
+                    ->relationship('part_type', 'name')
+                    ->required()
+                    ->preload(),
             ]);
     }
 
@@ -50,7 +53,6 @@ class PartResource extends Resource
             ->actions([
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\EditAction::make(),
-
                     Tables\Actions\DeleteAction::make(),
                 ]),
             ])
